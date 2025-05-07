@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
         if ($user) {
-            echo "User found: " . htmlspecialchars($user['email']);
             try {
                 // Start session and set user ID
                 session_start();
@@ -35,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $error = "Error: " . $e->getMessage();
             }
         } else {
-            echo "User not found";
             $error .= "Invalid verification code.";
             $verification_sent = true;
         }
