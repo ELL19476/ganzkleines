@@ -18,7 +18,6 @@
 
     }
     .highlight {
-      color: black;
       display: inline-block;
       transition: transform 0.3s ease;
       font-style: italic;

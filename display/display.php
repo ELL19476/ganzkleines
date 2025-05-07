@@ -20,7 +20,8 @@ $subject = "Schwanz";
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: white;
+            background-color: black;
+            color: white;
             font-family: Arial, sans-serif;
             font-size: 5em;
             position: relative;
@@ -32,7 +33,7 @@ $subject = "Schwanz";
             bottom: 50px;
             text-decoration: none;
             color: inherit;
-            
+
         }
     </style>
     <style>
