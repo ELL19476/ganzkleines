@@ -10,7 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $digit3 = $_POST['digit3'] ?? '';
         $digit4 = $_POST['digit4'] ?? '';
         try {
-            $verification_code = $digit1 . $digit2 . $digit3 . $digit4;
+            $verification_code = sprintf("%s%s%s%s", $digit1, $digit2, $digit3, $digit4);
+            echo $verification_code;
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND code = ?");
             $stmt->execute([$email, $verification_code]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         } else {
             $error = "Invalid verification code.";
+            $verification_sent = true;
         }
     } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Please provide a valid email.";
@@ -167,9 +169,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (e.key >= 0 && e.key <= 9) {
           if (index < inputs.length - 1) {
             inputs[index + 1].focus();
+            inputs[index + 1].select();
           }
         } else if (e.key === 'Backspace' && index > 0 && !input.value) {
           inputs[index - 1].focus();
+          inputs[index + 1].select();
         }
       });
     });
