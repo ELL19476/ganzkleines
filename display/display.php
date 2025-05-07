@@ -5,6 +5,17 @@ $subject = "Schwanz";
 require_once 'database.php';
 
 try {
+    if(isset($_SESSION['user_id'])) {
+        // CHECK IF USER HAS ALREADY VOTED
+        $stmt = $pdo->prepare("SELECT * FROM votes WHERE user_id = ?");
+        $stmt->execute([$_SESSION['user_id']]);
+        $vote = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+} catch (PDOException $e) { 
+    $error = "Error: " . $e->getMessage();
+}
+
+try {
     $nameStmt = $pdo->query("
         SELECT name, COUNT(*) as votes_count 
         FROM votes 
@@ -162,7 +173,7 @@ try {
         </svg>
 
         <button class="vote-button">
-        <span><h3 class="header">Vote now!</h3><span class="subtitle">for next month's <i>Ganz Kleines</i></span></span>
+        <span><h3 class="header"><?php echo $vote? "Vote again!" : "Vote now!" ?></h3><span class="subtitle">for next month's <i>Ganz Kleines</i></span></span>
         <div class="sparkle"></div>
         <div class="sparkle"></div>
         <div class="sparkle"></div>
