@@ -3,10 +3,10 @@ require 'database.php';
 
 // CHECK IF USER IS LOGGED IN
 session_start();
-// if (!isset($_SESSION['user_id'])) {
-//     header("Location: /login");
-//     exit;
-// }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /login");
+    exit;
+}
 // CHECK IF USER HAS ALREADY VOTED
 $stmt = $pdo->prepare("SELECT * FROM votes WHERE user_id = ?");
 $stmt->execute([$_SESSION['user_id']]);
@@ -16,23 +16,28 @@ $vote = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($vote) {
     $error = "You have already voted.";
 } else {
-    $votes = [];
-    // GET ALL VOTES
-    $stmt = $pdo->query("SELECT * FROM votes ORDER BY created_at DESC");    
-    $stmt->execute();
-    $votes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $names = array_column($votes, 'name');
-    $subjects = array_column($votes, 'subject');
-    // Handle form submission
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $name = $_POST['name'] ?? '';
-        $subject = $_POST['subject'] ?? '';
-        $user_id = $_SESSION['user_id'] ?? null;
+    try {
+        $votes = [];
+        // GET ALL VOTES
+        $stmt = $pdo->query("SELECT * FROM votes ORDER BY created_at DESC");    
+        $stmt->execute();
+        $votes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $names = array_column($votes, 'name');
+        $subjects = array_column($votes, 'subject');
+        // Handle form submission
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $name = $_POST['name'] ?? '';
+            $subject = $_POST['subject'] ?? '';
+            $user_id = $_SESSION['user_id'] ?? null;
 
-        if (!empty($name) && !empty($subject) && $user_id) {
-            $stmt = $pdo->prepare("INSERT INTO votes (user_id, name, subject) VALUES (?, ?, ?)");
-            $stmt->execute([$user_id, $name, $subject]);
+            if (!empty($name) && !empty($subject) && $user_id) {
+                $stmt = $pdo->prepare("INSERT INTO votes (user_id, name, subject) VALUES (?, ?, ?)");
+                $stmt->execute([$user_id, $name, $subject]);
+            }
         }
+    } catch (PDOException $e) {
+        $error = "Error: " . $e->getMessage();
+        exit;
     }
 }
 ?>
