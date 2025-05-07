@@ -13,7 +13,9 @@ try {
         LIMIT 1
     ");
 
-    $popularName = $nameStmt->fetch(PDO::FETCH_ASSOC)['name'];
+    $popular = $nameStmt->fetch(PDO::FETCH_ASSOC);
+    $popularName = $popular['name'];
+    $popularNameCount = $popular['votes_count'];
 
     // Query to get the most popular subject
     $subjectStmt = $pdo->query("
@@ -24,7 +26,9 @@ try {
         LIMIT 1
     ");
 
-    $popularSubject = $subjectStmt->fetch(PDO::FETCH_ASSOC)['subject'];
+    $popular = $subjectStmt->fetch(PDO::FETCH_ASSOC);
+    $popularSubject = $popular['subject'];
+    $popularSubjectCount = $popular['votes_count'];
 } catch (PDOException $e) {
     $error = "Error: " . $e->getMessage();
 }
@@ -165,7 +169,7 @@ try {
         </button>
     </a>
 
-    <div class="most-popular"><h6>Most popular for next month: <?php echo $popularName . " " . $popularSubject; ?></h6></div>
+    <div class="most-popular"><h6>Most popular for next month: <?php echo "$popularName ($popularNameCount) $popularSubject ($popularSubjectCount)" ?></h6></div>
 
     <script>
         // List of emojis for the custom cursor
