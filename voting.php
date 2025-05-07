@@ -38,7 +38,7 @@ try {
             if (!empty($name) && !empty($subject) && $user_id) {
                 $stmt = $pdo->prepare("INSERT INTO votes (user_id, name, subject) VALUES (?, ?, ?)");
                 $stmt->execute([$user_id, $name, $subject]);
-                
+
                 $success = "Vote submitted successfully!";
                 echo "Redirecting to home page...";
                 header("Location: /");
@@ -82,18 +82,18 @@ try {
 
         <?php if(!empty($vote)): ?>
           <div class="alert alert-warning" role="alert">
-            You have already voted for <strong><?php echo htmlspecialchars($vote['name']); ?></strong> in the subject <strong><?php echo htmlspecialchars($vote['subject']); ?></strong>. <br>
+            You have already voted for <strong><?php echo htmlspecialchars($vote['name']); ?> <?php echo htmlspecialchars($vote['subject']); ?></strong>. <br>
             If you want to change your vote, submit the voting form again.
         </div>
         <?php endif; ?>
 
         <div class="col-md-6 position-relative">
-          <input id="nameSearch" type="text" name="name" class="form-control rounded-2 px-4 py-3" placeholder="Your Name" autocomplete="off" required>
+          <input id="nameSearch" type="text" name="name" class="form-control rounded-2 px-4 py-3" placeholder="Name" autocomplete="off" required>
           <div id="nameList" class="dropdown-menu custom-dropdown mt-2 w-100"></div>
         </div>
 
         <div class="col-md-6 position-relative">
-          <input id="subjectSearch" type="text" name="subject" class="form-control rounded-2 px-4 py-3" placeholder="Your Subject" autocomplete="off" required>
+          <input id="subjectSearch" type="text" name="subject" class="form-control rounded-2 px-4 py-3" placeholder="Subject" autocomplete="off" required>
           <div id="subjectList" class="dropdown-menu custom-dropdown mt-2 w-100"></div>
         </div>
 
