@@ -3,7 +3,7 @@ ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 echo $_SERVER['HOME'];
 
-require $_SERVER['HOME'] . '/vendor/autoload.php';
+require '/home/u937524310/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 
