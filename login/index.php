@@ -122,10 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     <h5 class="card-title text-center mb-3">Enter Verification Code</h5>
                                     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                         <div class="d-flex justify-content-between mb-3">
-                                            <input type="text" name="digit1" maxlength="1" class="form-control text-center fs-4" style="width: 60px;" required>
-                                            <input type="text" name="digit2" maxlength="1" class="form-control text-center fs-4" style="width: 60px;" required>
-                                            <input type="text" name="digit3" maxlength="1" class="form-control text-center fs-4" style="width: 60px;" required>
-                                            <input type="text" name="digit4" maxlength="1" class="form-control text-center fs-4" style="width: 60px;" required>
+                                            <input type="text" name="digit1" maxlength="1" class="form-control text-center fs-4 code-input" style="width: 60px;" required>
+                                            <input type="text" name="digit2" maxlength="1" class="form-control text-center fs-4 code-input" style="width: 60px;" required>
+                                            <input type="text" name="digit3" maxlength="1" class="form-control text-center fs-4 code-input" style="width: 60px;" required>
+                                            <input type="text" name="digit4" maxlength="1" class="form-control text-center fs-4 code-input" style="width: 60px;" required>
                                         </div>
 
                                         <div class="d-grid">
@@ -159,22 +159,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </div>
 
+
 <script>
     const inputs = document.querySelectorAll('.code-input');
-
     inputs.forEach((input, index) => {
-        input.addEventListener('input', (e) => {
-            if (e.target.value.length === 1 && index < inputs.length - 1) {
-                inputs[index + 1].focus();
-            }
-        });
-
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
-                inputs[index - 1].focus();
-            }
-        });
+      input.addEventListener('keyup', (e) => {
+        if (e.key >= 0 && e.key <= 9) {
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        } else if (e.key === 'Backspace' && index > 0 && !input.value) {
+          inputs[index - 1].focus();
+        }
+      });
     });
-</script>
+  </script>
 </body>
 </html>
