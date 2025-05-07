@@ -67,10 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <body>
                     <div style="text-align: center; padding: 20px;">
-                        <h1>Welcome to Our Service</h1>
-                        <p>Thank you for registering! Please verify your email address by entering the code below:</p>
+                        <h1>Gleich kannst du bei Ganz Kleines abstimmen!</h1>
+                        <p>Danke für deine Registrierung! Bitte verifiziere deine Email durch Eingabe des folgendes Codes:</p>
                         <h2 style="font-size: 24px;">' . $verification_code . '</h2>
-                        <p>If you did not register, please ignore this email.</p>
+                        <p>Wenn du dich nicht bei ganzkleines.de registriert hast, kannst du diese Email ignorieren.</p>
                     </div>
                 </body>
 
@@ -158,5 +158,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
 </div>
+
+<script>
+    const inputs = document.querySelectorAll('.code-input');
+
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+</script>
 </body>
 </html>
