@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND code = ?");
             $stmt->execute([$email, $verification_code]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo $user;
         } catch (PDOException $e) {
             $error = "Error: " . $e->getMessage();
             exit;
