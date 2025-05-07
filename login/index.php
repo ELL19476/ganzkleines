@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute([$email, $verification_code]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!$user) {
-                $error = "NO USER FOUND.";
+                $error = "NO USER FOUND for: " . htmlspecialchars($email) . " with code: " . htmlspecialchars($verification_code);
             }
         } catch (PDOException $e) {
             $error = "Error: " . $e->getMessage();
