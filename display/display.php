@@ -12,7 +12,6 @@ try {
         $stmt->execute([$_SESSION['user_id']]);
         $vote = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    var_dump($vote);
 } catch (PDOException $e) { 
     $error = "Error: " . $e->getMessage();
 }
