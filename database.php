@@ -10,11 +10,12 @@ try {
     
     // Set error mode to exceptions
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Optional: echo connection success message
-    echo "Connected to the database successfully!";
 } catch (PDOException $e) {
     // Handle connection error
-    echo "Connection failed: " . $e->getMessage();
+    ?>
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> Could not connect to the database. Please check your credentials.
+        </div>
+    <?php
 }
 ?>

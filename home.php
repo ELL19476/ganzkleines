@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <link id="google-font-link" rel="stylesheet" href="">
   <title>Ludwigs Schwanz</title>
+  <?php include '../partials/head.php'; ?>
   <style>
     body {
       margin: 0;
