@@ -132,6 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                             <input type="text" name="digit3" maxlength="1" class="form-control text-center fs-4 code-input" style="width: 60px;" required>
                                             <input type="text" name="digit4" maxlength="1" class="form-control text-center fs-4 code-input" style="width: 60px;" required>
                                         </div>
+                                        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
 
                                         <div class="d-grid">
                                             <button type="submit" name="verify_code" class="btn btn-primary">Verify</button>
