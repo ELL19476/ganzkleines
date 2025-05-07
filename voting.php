@@ -12,33 +12,45 @@ $stmt = $pdo->prepare("SELECT * FROM votes WHERE user_id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $vote = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// CHECK IF USER HAS ALREADY VOTED
-if ($vote) {
-    $error = "You have already voted.";
-} else {
-    try {
-        $votes = [];
-        // GET ALL VOTES
-        $stmt = $pdo->query("SELECT * FROM votes ORDER BY created_at DESC");    
-        $stmt->execute();
-        $votes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $names = array_column($votes, 'name');
-        $subjects = array_column($votes, 'subject');
-        // Handle form submission
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $name = $_POST['name'] ?? '';
-            $subject = $_POST['subject'] ?? '';
-            $user_id = $_SESSION['user_id'] ?? null;
+try {
+    $votes = [];
+    // GET ALL VOTES
+    $stmt = $pdo->query("SELECT * FROM votes ORDER BY created_at DESC");    
+    $stmt->execute();
+    $votes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $names = array_column($votes, 'name');
+    $subjects = array_column($votes, 'subject');
+    // Handle form submission
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $name = $_POST['name'] ?? '';
+        $subject = $_POST['subject'] ?? '';
+        $user_id = $_SESSION['user_id'] ?? null;
 
+        if(!empty($vote)) {
+            $stmt = $pdo->prepare("UPDATE votes SET name = ?, subject = ? WHERE user_id = ?");
+            $stmt->execute([$name, $subject, $user_id]);
+
+            $success = "Vote updated successfully!";
+            echo "Redirecting to home page...";
+            header("Location: /");
+            exit;
+        } else {
             if (!empty($name) && !empty($subject) && $user_id) {
                 $stmt = $pdo->prepare("INSERT INTO votes (user_id, name, subject) VALUES (?, ?, ?)");
                 $stmt->execute([$user_id, $name, $subject]);
+                
+                $success = "Vote submitted successfully!";
+                echo "Redirecting to home page...";
+                header("Location: /");
+                exit;
+            } else {
+                $error = "Please provide a name and a subject.";
             }
         }
-    } catch (PDOException $e) {
-        $error = "Error: " . $e->getMessage();
-        exit;
     }
+} catch (PDOException $e) {
+    $error = "Error: " . $e->getMessage();
+    exit;
 }
 ?>
 
@@ -66,6 +78,13 @@ if ($vote) {
           <div class="alert alert-success" role="alert">
             <?php echo htmlspecialchars($success); ?>
           </div>
+        <?php endif; ?>
+
+        <?php if(!empty($vote)): ?>
+          <div class="alert alert-warning" role="alert">
+            You have already voted for <strong><?php echo htmlspecialchars($vote['name']); ?></strong> in the subject <strong><?php echo htmlspecialchars($vote['subject']); ?></strong>. <br>
+            If you want to change your vote, submit the voting form again.
+        </div>
         <?php endif; ?>
 
         <div class="col-md-6 position-relative">
