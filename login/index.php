@@ -23,19 +23,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
         if ($user) {
+            echo "User found: " . htmlspecialchars($user['email']);
             try {
-                ob_start();
-                // Verification successful, proceed with login or registration
+                // Start session and set user ID
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 header("Location: /voting");
-
-                ob_end_flush();
+                echo "Redirecting to voting page...";
                 exit;
             } catch (Exception $e) {
                 $error = "Error: " . $e->getMessage();
             }
         } else {
+            echo "User not found";
             $error .= "Invalid verification code.";
             $verification_sent = true;
         }
