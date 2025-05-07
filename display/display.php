@@ -1,6 +1,33 @@
 <?php
 $name = "Ludwigs";
 $subject = "Schwanz";
+
+require_once 'database.php';
+
+try {
+    $nameStmt = $pdo->query("
+        SELECT name, COUNT(*) as votes_count 
+        FROM votes 
+        GROUP BY name 
+        ORDER BY votes_count DESC, created_at DESC
+        LIMIT 1
+    ");
+
+    $popularName = $nameStmt->fetch(PDO::FETCH_ASSOC)['name'];
+
+    // Query to get the most popular subject
+    $subjectStmt = $pdo->query("
+        SELECT subject, COUNT(*) as votes_count 
+        FROM votes 
+        GROUP BY subject 
+        ORDER BY votes_count DESC, created_at DESC
+        LIMIT 1
+    ");
+
+    $popularSubject = $subjectStmt->fetch(PDO::FETCH_ASSOC)['subject'];
+} catch (PDOException $e) {
+    $error = "Error: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -101,6 +128,23 @@ $subject = "Schwanz";
     .sparkle:nth-child(4) { top: 52%; left: 0; animation-delay: 0.9s; }
 
   </style>
+  <style>
+    .most-popular {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 0.3em;
+      color: #fff;
+      text-align: center;
+      font-weight: 300;
+      font-family: monospace;
+
+    }
+
+    .most-popular h6 {
+        margin: 0;
+    }
+  </style>
 
     <?php include 'display_inner.php'; ?>
 
@@ -120,6 +164,8 @@ $subject = "Schwanz";
         <div class="sparkle"></div>
         </button>
     </a>
+
+    <div class="most-popular"><h6>Most popular for next month: <?php echo $popularName . " " . $popularSubject; ?></h6></div>
 
     <script>
         // List of emojis for the custom cursor
