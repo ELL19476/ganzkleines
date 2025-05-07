@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vote Now Button</title>
+  <style>
+    body {
+      background: fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .vote-button {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 300px;
+      height: 300px;
+      background: #59fec5;
+      background: linear-gradient(30deg, #f8ff00 0%, #59fec5 100%);
+      color: #182848;
+      font-family: 'Arial Black', sans-serif;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      clip-path: url(#star-shape);
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      overflow: hidden;
+    }
+    .vote-button .header {
+        font-family: Pacifico, sans-serif;
+        font-size: 2rem;
+    }
+
+    .vote-button span {
+      display: block;
+      padding: 0 10px;
+      line-height: 1.2;
+    }
+
+    .vote-button:hover {
+      transform: rotate(5deg) scale(1.05);
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 345 345'%3E%3Cpath d='M172.5 0L201.408 143.592L345 172.5L201.408 201.408L172.5 345L143.592 201.408L0 172.5L143.592 143.592L172.5 0Z' fill='%23fff'/%3E%3C/svg%3E");
+      animation: sparkle 1s infinite ease-in-out alternate;
+      opacity: 0.8;
+    }
+
+    @keyframes sparkle {
+      0% { transform:  scale(1); opacity: 0.8; }
+      70% { transform: scale(0.5) rotate(120deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 0; }
+    }
+
+    /* Random sparkle positions */
+    .sparkle:nth-child(2) { top: 7%; left: 66%; animation-delay: 0.3s; }
+    .sparkle:nth-child(3) { top: 82.1%; left: 64.3%; animation-delay: 0.6s; }
+    .sparkle:nth-child(4) { top: 52%; left: 0; animation-delay: 0.9s; }
+
+  </style>
+</head>
+<body>
+
+</body>
+</html>

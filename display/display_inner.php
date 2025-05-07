@@ -3,6 +3,7 @@
       text-align: center;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
     .highlight-wrapper {
@@ -11,9 +12,8 @@
       position: relative;
       display: inline-block;
       margin-left: 0.3em;
-      margin-bottom: 1em;
 
-      height: 2ch;
+      height: auto;
       text-align: left;
 
     }
