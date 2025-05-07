@@ -1,11 +1,9 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-// Load Composer's autoloader
 require 'vendor/autoload.php';
 
-$mail = new PHPMailer(true);
+use PHPMailer\PHPMailer\PHPMailer;
+
+$mail = new PHPMailer;
 
 function sendEmail($to, $subject, $body) {
     global $mail;
