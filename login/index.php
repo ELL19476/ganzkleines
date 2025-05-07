@@ -15,7 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND code = ?");
             $stmt->execute([$email, $verification_code]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo $user;
+            if (!$user) {
+                $error = "NO USER FOUND.";
+            }
         } catch (PDOException $e) {
             $error = "Error: " . $e->getMessage();
             exit;
@@ -31,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $error = "Error: " . $e->getMessage();
             }
         } else {
-            $error = "Invalid verification code.";
+            $error .= "Invalid verification code.";
             $verification_sent = true;
         }
     } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
