@@ -5,6 +5,7 @@ $subject = "Schwanz";
 require_once 'database.php';
 
 try {
+    session_start();
     if(isset($_SESSION['user_id'])) {
         // CHECK IF USER HAS ALREADY VOTED
         $stmt = $pdo->prepare("SELECT * FROM votes WHERE user_id = ?");
