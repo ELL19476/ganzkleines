@@ -173,7 +173,7 @@ try {
         </svg>
 
         <button class="vote-button">
-        <span><h3 class="header"><?php echo $vote? "Vote again!" : "Vote now!" ?></h3><span class="subtitle">for next month's <i>Ganz Kleines</i></span></span>
+        <span><h3 class="header"><?php if($vote) {echo "You voted!"; } else { echo "Vote now!"; } ?></h3><span class="subtitle">for next month's <i>Ganz Kleines</i></span></span>
         <div class="sparkle"></div>
         <div class="sparkle"></div>
         <div class="sparkle"></div>
