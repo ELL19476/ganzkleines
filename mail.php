@@ -1,7 +1,7 @@
 <?php
 ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
-echo $_SERVER['HOME'];
+print_r($_SERVER);
 
 require '/home/u937524310/vendor/autoload.php';
 
