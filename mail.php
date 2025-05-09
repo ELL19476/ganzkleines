@@ -11,14 +11,14 @@ function sendEmail($to, $subject, $body) {
     $mail->isSMTP();                                            // Use SMTP
     $mail->Host       = 'smtp.hostinger.com';                   // Set Hostinger SMTP server
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = 'hallo@ganzkleines.de';                 // Your email address
+    $mail->Username   = 'verify@ganzkleines.de';                 // Your email address
     $mail->Password   = 'JA7[bWVaRrQamb&brv$X';                          // Your email password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            // Enable implicit SSL encryption
     $mail->Port       = 465;                                    // TCP port to connect to
 
     //Recipients
-    $mail->setFrom('hallo@ganzkleines.de', 'Ganz Kleines');
-    $mail->addReplyTo('hallo@ganzkleines.de', 'Ganz Kleines');
+    $mail->setFrom('verify@ganzkleines.de', 'Ganz Kleines');
+    $mail->addReplyTo('verify@ganzkleines.de', 'Ganz Kleines');
     $mail->addAddress($to);                                   // Add a recipient
 
     // Content
